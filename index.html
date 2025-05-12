@@ -1,0 +1,155 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Colour Sureshot</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Orbitron', sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #e6f0ff, #ffffff);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .container {
+      background: #fff;
+      width: 90%;
+      max-width: 500px;
+      border-radius: 16px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      padding: 30px;
+      text-align: center;
+      position: relative;
+    }
+    .stats {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 14px;
+      color: #004aad;
+    }
+    h1 {
+      color: #004aad;
+      margin-bottom: 20px;
+    }
+    .logo {
+      width: 180px;
+      height: auto;
+      margin-bottom: 20px;
+    }
+    button {
+      width: 100%;
+      padding: 14px;
+      margin: 10px 0;
+      font-size: 16px;
+      font-weight: bold;
+      background-color: #0077ff;
+      border: none;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background-color: #005fcc;
+    }
+    .rules {
+      background: #f0f8ff;
+      border: 2px solid #0077ff;
+      border-radius: 10px;
+      padding: 15px;
+      text-align: left;
+      color: #003366;
+      font-size: 14px;
+      margin-top: 20px;
+    }
+    .rules strong {
+      color: #004aad;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="stats">
+      Tokens: <span id="tokenCount">10</span>
+    </div>
+    <img src="Leonardo_Phoenix_10_A_futuristic_butterfly_with_wings_designed_3.jpg" alt="Logo" class="logo" />
+    <h1>Colour Sureshot</h1>
+
+    <button onclick="showRules()">RULES</button>
+    <button onclick="forceJoin()">FREE GIFT CODE</button>
+    <button onclick="startPrediction()">START</button>
+    <button onclick="window.location.href='http://t.me/Colour_supportbot'">SUPPORT</button>
+    <button onclick="shareGame()">SHARE</button>
+
+    <div class="rules" id="rulesBox" style="display: none;">
+      <p><strong>→</strong> ENTER THE LAST THREE DIGITS OF THE PERIOD NUMBER</p>
+      <p><strong>→</strong> DAILY CREDIT 10 POINTS = 10 PLAYS IN 24 HOURS</p>
+      <p><strong>→</strong> SHARE WITH FRIENDS TO GET +2 BONUS POINTS FOR THAT DAY</p>
+      <p><strong>→</strong> PLAY WITH LEVEL: 1X → 3X → 9X → 27X → 81X → 243X → 729X → ...</p>
+      <p><strong>→</strong> BEST PLAY TIMES: 9 AM, 2 AM, 9 PM</p>
+    </div>
+  </div>
+
+  <script>
+    let tokens = 10;
+    let multiplier = 1;
+
+    function showRules() {
+      const rules = document.getElementById("rulesBox");
+      rules.style.display = rules.style.display === "none" ? "block" : "none";
+    }
+
+    function forceJoin() {
+      const joinUrl = `https://t.me/BUTTERFLYSHOT`;
+      window.location.href = joinUrl;
+    }
+
+    function updateTokensDisplay() {
+      document.getElementById("tokenCount").textContent = tokens;
+    }
+
+    function startPrediction() {
+      if (tokens <= 0) {
+        alert("No tokens left. Share to get more!");
+        return;
+      }
+      const input = prompt("Enter the last 3 digits of the period:");
+      if (!input || input.length !== 3 || isNaN(input)) {
+        alert("Please enter a valid 3-digit number.");
+        return;
+      }
+      const lastDigit = parseInt(input[input.length - 1]);
+      const color = [1, 3, 5, 7, 9].includes(lastDigit) ? 'GREEN' : 'RED';
+      alert("Predicted Colour: " + color);
+
+      const result = confirm("Did you WIN? Click OK for WIN, Cancel for LOSS.");
+      if (!result) {
+        multiplier *= 3;
+      } else {
+        multiplier = 1;
+      }
+      tokens--;
+      updateTokensDisplay();
+      alert(`Next Bet Multiplier: ${multiplier}x | Tokens Left: ${tokens}`);
+    }
+
+    function shareGame() {
+      tokens += 2;
+      updateTokensDisplay();
+      alert("You received +2 tokens for sharing!");
+    }
+
+    updateTokensDisplay();
+  </script>
+</body>
+</html>
